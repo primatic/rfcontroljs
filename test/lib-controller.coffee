@@ -558,12 +558,19 @@ describe '#decodePulses()', ->
         '00101010101010101100110012'
         '01010010101010101100110012'
         '00110010101010101100110012'
+<<<<<<< HEAD
         '00110010101010101100110012'
+=======
+>>>>>>> 087e24c809317461a801d1bbb07f5e35057498ba
         '01010101001010101100110012'
         '00110101001010101100110012'
         '01001101001010101100110012'
         '00101101001010101100110012'
         '01001100101010101100110012'
+<<<<<<< HEAD
+=======
+        '00101100101010101100110012'
+>>>>>>> 087e24c809317461a801d1bbb07f5e35057498ba
         '01010100101010101100110012'
         '00110100101010101100110012'
         '01010011001010101100110012'
@@ -697,14 +704,14 @@ describe '#decodePulses()', ->
     it "#{t.protocol} should decode the pulses", ->
       for pulses, i in t.pulses
         results = controller.decodePulses(t.pulseLengths, pulses)
-        assert(results.length >= 1, "pulse of #{t.protocol} should be detected. pulseLengths: #{t.pulseLengths} pulses: #{pulses}")
+        assert(results.length >= 1, "pulse of #{t.protocol} should be detected.")
         result = null
         for r in results
           if r.protocol is t.protocol
             result = r
             break
         assert(result, "pulse of #{t.protocol} should be detected as #{t.protocol}.")
-        assert.deepEqual(result.values, t.values[i], "result values #{result.values} differ from expected/actual values #{t.values[i]}")
+        assert.deepEqual(result.values, t.values[i])
   )
 
   runTest(t) for t in tests
