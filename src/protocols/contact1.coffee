@@ -16,7 +16,7 @@ module.exports = (helper) ->
     type: 'contact'
     values:
       id:
-        type: "number"
+        type: "binary"
       all:
         type: "boolean"
       contact:

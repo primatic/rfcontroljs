@@ -17,7 +17,7 @@ module.exports = (helper) ->
       systemcode:
         type: "number"
       programcode:
-        type: "string"
+        type: "number"
       state:
         type: "boolean"
     brands: ["Rev"]

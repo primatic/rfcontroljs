@@ -33,36 +33,36 @@ module.exports = (helper) ->
       #010101
       #01
       #010110010101
-      #13, 03
+      #13 or 03
 
       # we first map the sequences to binary
       binary = helper.map(pulses, pulsesToBinaryMapping)
       # binary is now something like: '00010001001000001001111000100 000 0 001 000'
       # now we extract the data from that string
-      # | 0001 0001 0010 0000 1001 1110 0010 | 0001     | 0   | 001     | 000                      |
-      # | id                                 | channel  | fix | command | command inverse to footer |
+      # | 00010001001000001001111000100 | 001     | 0   | 001     | 000                      |
+      # | id                            | channel | fix | command | command invers to footer |
 
-      channel = helper.binaryToNumber(binary, 28, 31)
-      all = (if channel is 0 then true else false)
-      commandCode = binary[33..35]
+      channel = helper.binaryToNumber(binary, 29, 31)
+      all = (if channel = '0' then true else false)
+      commandcode = binary[33..35]
       command = (
-        switch commandCode
+        switch commandcode
           when '001' then 'up'
           when '011' then 'down'
           when '101' then 'stop'
       )
-      return result = {
-        id: helper.binaryToNumber(binary, 0, 27)
+      return result= {
+        id: helper.binaryToNumber(binary, 0, 28)
         channel: channel
         all: all
         command: command
       }
 
     encodeMessage: (message) ->
-      id = helper.map(helper.numberToBinary(message.id, 28), binaryToPulse)
+      id = helper.map(helper.numberToBinary(message.id, 29), binaryToPulse)
       if message.all
-        channelCode = 0
-        commandCode = (
+        channelcode = 0
+        commandcode = (
           switch message.command
             when 'up' then '001000'
             when 'down' then '011001'
@@ -70,20 +70,20 @@ module.exports = (helper) ->
         )
         footer = '13'
       else
-        channelCode = message.channel
+        channelcode = message.channel
         switch message.command
           when 'up'
-            commandCode = '001111'
+            commandcode = '001111'
             footer = '03'
           when 'down'
-            commandCode = '011110'
+            commandcode = '011110'
             footer = '03'
           when 'stop'
-            commandCode = '101010'
+            commandcode = '101010'
             footer = '13'
 
-      channel = helper.map(helper.numberToBinary(channelCode, 4), binaryToPulse)
-      command = helper.map(commandCode, binaryToPulse)
+      channel = helper.map(helper.numberToBinary(channelcode, 3), binaryToPulse)
+      command = helper.map(commandcode, binaryToPulse)
 
       return "32#{id}#{channel}01#{command}#{footer}"
   }

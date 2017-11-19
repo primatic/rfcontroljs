@@ -18,7 +18,7 @@ module.exports = (helper) ->
     type: 'dimmer'
     values:
       id:
-        type: "number"
+        type: "binary"
       all:
         type: "boolean"
       state:

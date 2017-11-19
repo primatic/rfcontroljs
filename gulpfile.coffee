@@ -4,10 +4,9 @@ plumber = require('gulp-plumber')
 coffee = require('gulp-coffee')
 mocha = require('gulp-mocha')
 coffeelint = require('gulp-coffeelint')
-istanbul = require('gulp-coffee-istanbul')
 
 gulp.task('default', ->
-  watch('src/**/*.coffee', verbose: true)
+  watch(glob: 'src/**/*.coffee', verbose: true)
     .pipe(plumber()) # This will keeps pipes working after error event
     .pipe(coffeelint({
       no_unnecessary_fat_arrows: {
@@ -22,23 +21,6 @@ gulp.task('default', ->
     .pipe(gulp.dest('lib'))
 )
 
-
-gulp.task 'build', ->
-  gulp.src('src/**/*.coffee')
-  .pipe(plumber()) # This will keeps pipes working after error event
-  .pipe(coffeelint({
-    no_unnecessary_fat_arrows: {
-      level: 'ignore'
-    },
-    max_line_length: {
-      value: 120
-    }
-  }))
-  .pipe(coffeelint.reporter())
-  .pipe(coffee(bare: yes))
-  .pipe(gulp.dest('lib'))
-
-
 gulp.task 'test', ->
   gulp.src('test/*.coffee', read: false)
     .pipe(mocha(
@@ -46,13 +28,16 @@ gulp.task 'test', ->
     ))
 
 gulp.task 'coverage', ->
-  gulp.src('src/**/*.coffee')
-  .pipe istanbul({includeUntested: true}) # Covering files
-  .pipe istanbul.hookRequire()
-  .on 'finish', ->
-    gulp.src 'test/*.coffee'
-    .pipe mocha reporter: 'spec'
-    .pipe istanbul.writeReports() # Creating the reports after tests run
+  gulp.src('test/*.coffee', read: false)
+    .pipe(coffee(bare: yes))
+    .pipe(cover.instrument({
+      pattern: ['**/test/*'],
+      debugDirectory: 'debug'
+    }))
+    .pipe(mocha({}))
+    .pipe(cover.report({
+      outFile: 'coverage.html'
+    }));
 
 
 gulp.task 'docs', ->

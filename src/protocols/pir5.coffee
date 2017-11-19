@@ -16,14 +16,14 @@ module.exports = (helper) ->
     type: 'pir'
     values:
       id:
-        type: "number"
+        type: "binary"
       all:
         type: "boolean"
       presence:
         type: "boolean"
       unit:
         type: "number"
-    brands: ["Trust SmartHome", "COCO Technologies", "KlikAanKlikUit"]
+    brands: ["KlikAanKlikUit"]
     pulseLengths: [268, 1282, 2632, 10168]
     pulseCounts: [132, 148]
     decodePulses: (pulses) ->

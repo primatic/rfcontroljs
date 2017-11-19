@@ -18,7 +18,7 @@ module.exports = (helper) ->
         type: "number"
       presence:
         type: "boolean"
-    brands: ["Multi Kon Trade (B00RTDMC4S)"]
+    brands: []
     pulseLengths: [ 451, 1402, 14356 ]
     pulseCount: 50
     decodePulses: (pulses) ->

@@ -11,15 +11,15 @@ module.exports = (helper) ->
   return protocolInfo = {
     name: 'doorbell3'
     type: 'switch'
-    values:
-      id:
+    values: 
+      id: 
         type: "number"
-      unit:
+      unit: 
         type: "number"
     brands: ["WP515S"]
     pulseLengths: [300, 580, 10224]
     pulseCount: 26
-    decodePulses: (pulses) ->
+    decodePulses: (pulses) -> 
       src = pulses.substring(1)
       binary = helper.map(src, pulsesToBinaryMapping)
       return result = {

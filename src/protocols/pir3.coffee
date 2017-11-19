@@ -18,7 +18,7 @@ module.exports = (helper) ->
         type: "number"
       presence:
         type: "boolean"
-    brands: ["Inter-Union"]
+    brands: []
     pulseLengths: [ 496, 1471, 6924 ]
     pulseCount: 66
     decodePulses: (pulses) ->
